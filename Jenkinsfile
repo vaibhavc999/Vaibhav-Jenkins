@@ -9,6 +9,7 @@ pipeline {
       steps {
         sh "mvn test"
         echo 'Test'
+        slackSend channel: 'jenkins', message: 'start'
       }
     }
 
@@ -40,9 +41,11 @@ pipeline {
     }
     success{
         echo "yess"
+        slackSend channel: 'jenkins', message: 'suces'
     }
     failure{
         echo "no"
+      slackSend channel: 'jenkins', message: 'fel'
     }
   }
 }
