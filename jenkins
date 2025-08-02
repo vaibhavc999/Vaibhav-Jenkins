@@ -1,0 +1,28 @@
+pipeline {
+    agent any // Specifies that the Pipeline can run on any available agent
+
+    options {
+        skipStagesAfterUnstable() // Skips subsequent stages if a stage fails
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                sh 'make' // Executes a shell command to build the project
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'make check' // Executes shell commands to run tests
+                junit 'reports/**/*.xml' // Publishes JUnit test results
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh 'make publish' // Executes shell commands to deploy the application
+            }
+        }
+    }
+}
